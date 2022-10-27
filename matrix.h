@@ -1,36 +1,29 @@
-#ifndef MATRIX
-#define MATRIX
 struct Matrix{
-    int row,col;
+    int row,col;// 我们使用了[0,0]~[row-1,col-1]的内存，您可以调用[1,1]~[row,col]的数据,请使用get和set
     float *data;
 };
 
-float getNum(const Matrix *now_used, const int row, const int col);
-int getPosition(const int max_row, const int max_col, const int row, const int col);
-int matrexLen(const Matrix *used);
+//get, set
+float getNum(const struct Matrix *now_used, const int row, const int col);
+void setNum(struct Matrix *now_used, const float num, const int row, const int col);
 
-void createMatrix(const int row, const int col, Matrix *used);
-void deleteMatrix(Matrix *used);
-void copyMatrix(const Matrix *source, Matrix *dest);
-void copyMatrix(const Matrix source, Matrix *dest);
+//构造函数
+void createMatrix(const int row, const int col, struct Matrix *used);
+void deleteMatrix(struct Matrix *used);
+void copyMatrix(const struct Matrix *source, struct Matrix *dest);
 
-Matrix constAddMatrix(const Matrix *a, const Matrix *b);            //a+b
-Matrix constSubtractMatrix(const Matrix *a, const Matrix *b);       //a-b
-Matrix constMultiplyMatrix(const Matrix *a, const Matrix *b);       //a*b
-Matrix constAddScaler(const float num, const Matrix *used);         //used each +num
-Matrix constSubtractScaler(const float num, const Matrix *used);    //used each -num
-Matrix constMultiplyScaler(const float num, const Matrix *used);    //used*num
+//计算
+struct Matrix addMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans);       //ans=a+b
+struct Matrix subtractMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans);  //ans=a-b
+struct Matrix multiplyMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans);  //ansa*b
+struct Matrix addScaler(const float num, const struct Matrix *used, struct Matrix *ans);           //ans=used each +num
+struct Matrix subtractScaler(const float num, const struct Matrix *used, struct Matrix *ans);      //ans=used each -num
+struct Matrix multiplyScaler(const float num, const struct Matrix *used, struct Matrix *ans);      //ans=used*num
 
-void addMatrix(const Matrix *a, Matrix *b);                         //b+=a
-void subtractMatrix(const Matrix *a, Matrix *b);                    //b-=a
-void multiplyMatrix(const Matrix *a, Matrix *b);                    //b*=a
-void addScaler(const float num, Matrix *used);                      //used each +=num
-void subtractScaler(const float num, Matrix *used);                 //used each -=num
-void constMultiplyScaler(const float num, Matrix *used);            //used*=num
 
-float max(const Matrix *used);
-float min(const Matrix *used);
+//最大最小
+float max(const struct Matrix *used);
+float min(const struct Matrix *used);
 
-void print(const Matrix *used);
-
-#endif
+//输出
+void print(const struct Matrix *used);
