@@ -1,0 +1,3 @@
+aux_source_directory(. SRCS)
+include_directories(.)
+add_executable(main ${SRCS})

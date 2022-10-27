@@ -13,12 +13,12 @@ void deleteMatrix(struct Matrix *used);
 void copyMatrix(const struct Matrix *source, struct Matrix *dest);
 
 //计算
-struct Matrix addMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans);       //ans=a+b
-struct Matrix subtractMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans);  //ans=a-b
-struct Matrix multiplyMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans);  //ansa*b
-struct Matrix addScaler(const float num, const struct Matrix *used, struct Matrix *ans);           //ans=used each +num
-struct Matrix subtractScaler(const float num, const struct Matrix *used, struct Matrix *ans);      //ans=used each -num
-struct Matrix multiplyScaler(const float num, const struct Matrix *used, struct Matrix *ans);      //ans=used*num
+void addMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans);       //ans=a+b
+void subtractMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans);  //ans=a-b
+void multiplyMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans);  //ansa*b
+void addScaler(const float num, const struct Matrix *used, struct Matrix *ans);           //ans=used each +num
+void subtractScaler(const float num, const struct Matrix *used, struct Matrix *ans);      //ans=used each -num
+void multiplyScaler(const float num, const struct Matrix *used, struct Matrix *ans);      //ans=used*num
 
 
 //最大最小
