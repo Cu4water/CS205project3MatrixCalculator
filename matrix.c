@@ -1,5 +1,5 @@
-#ifndef STDLIB
-#define STDLIB
+#ifndef STDLIB_H
+#define STDLIB_H
 #include<stdlib.h>
 #endif
 #ifndef MATRIX
@@ -23,11 +23,13 @@ void setNum(struct Matrix *now_used, const float num, const int row, const int c
 //构造函数
 void createMatrix(const int row, const int col, struct Matrix *used) {
     if( row <= 0 || col <= 0) return;
+    if(used == NULL) return;
     used -> col = col;
     used -> row = row;
     used -> data = (float *) malloc( sizeof(float) * row * col );
 }
 void deleteMatrix(struct Matrix *used) {
+    if(used == NULL) return;
     free(used -> data);
     free(used);
 }
@@ -46,9 +48,9 @@ struct Matrix *copyMatrix(const struct Matrix *source, struct Matrix *dest) {
 //计算
 struct Matrix *addMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans) {
     deleteMatrix(ans);
-    ans = NULL;
-    if(a == NULL || b == NULL) return ans;
-    if( a -> row != b -> row || a -> col != b -> col ) return ans;
+    ans = (struct Matrix *) malloc ( sizeof( struct Matrix ) );
+    if(a == NULL || b == NULL) return NULL;
+    if( a -> row != b -> row || a -> col != b -> col ) return NULL;
     createMatrix(a -> row, a -> col, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
@@ -59,9 +61,9 @@ struct Matrix *addMatrix(const struct Matrix *a, const struct Matrix *b, struct 
 }
 struct Matrix *subtractMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans) {
     deleteMatrix(ans);
-    ans = NULL;
-    if(a == NULL || b == NULL) return ans;
-    if( a -> row != b -> row || a -> col != b -> col ) return ans;
+    ans = (struct Matrix *) malloc ( sizeof( struct Matrix ) );
+    if(a == NULL || b == NULL) return NULL;
+    if( a -> row != b -> row || a -> col != b -> col ) return NULL;
     createMatrix(a -> row, a -> col, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
@@ -72,9 +74,9 @@ struct Matrix *subtractMatrix(const struct Matrix *a, const struct Matrix *b, st
 }
 struct Matrix *multiplyMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans) {
     deleteMatrix(ans);
-    ans = NULL;
-    if(a == NULL || b == NULL) return ans;
-    if(a -> col != b -> row) return ans;
+    ans =  (struct Matrix *) malloc ( sizeof( struct Matrix ) );
+    if(a == NULL || b == NULL) return NULL;
+    if(a -> col != b -> row) return NULL;
     createMatrix(a -> row, b -> col, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
@@ -89,6 +91,7 @@ struct Matrix *multiplyMatrix(const struct Matrix *a, const struct Matrix *b, st
 }
 struct Matrix *addScaler(const float num, const struct Matrix *used, struct Matrix *ans) {
     if(used == NULL) return NULL;
+    ans = (struct Matrix *) malloc ( sizeof( struct Matrix ) );
     copyMatrix(used, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
@@ -99,6 +102,7 @@ struct Matrix *addScaler(const float num, const struct Matrix *used, struct Matr
 }
 struct Matrix *subtractScaler(const float num, const struct Matrix *used, struct Matrix *ans) {
     if(used == NULL) return NULL;
+    ans = (struct Matrix *) malloc ( sizeof( struct Matrix ) );
     copyMatrix(used, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
@@ -109,6 +113,7 @@ struct Matrix *subtractScaler(const float num, const struct Matrix *used, struct
 }
 struct Matrix *multiplyScaler(const float num, const struct Matrix *used, struct Matrix *ans) {
     if(used == NULL) return NULL;
+    ans = (struct Matrix *) malloc ( sizeof( struct Matrix ) );
     copyMatrix(used, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
