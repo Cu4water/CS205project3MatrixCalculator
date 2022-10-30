@@ -31,7 +31,8 @@ void deleteMatrix(struct Matrix *used) {
     free(used -> data);
     free(used);
 }
-void copyMatrix(const struct Matrix *source, struct Matrix *dest) {
+struct Matrix *copyMatrix(const struct Matrix *source, struct Matrix *dest) {
+    if(source == NULL || dest == NULL) return NULL;
     deleteMatrix(dest);
     createMatrix(source -> row, source -> col, dest);
     for(int r=1; r<=source -> row; r++) {
@@ -39,37 +40,41 @@ void copyMatrix(const struct Matrix *source, struct Matrix *dest) {
             setNum(dest, getNum(source, r, c), r, c);
         }
     }
+    return dest;
 }
 
 //计算
-void addMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans) {
+struct Matrix *addMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans) {
     deleteMatrix(ans);
     ans = NULL;
-    if( a -> row != b -> row || a -> col != b -> col ) return ;
+    if(a == NULL || b == NULL) return ans;
+    if( a -> row != b -> row || a -> col != b -> col ) return ans;
     createMatrix(a -> row, a -> col, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
             setNum(ans, getNum(a, r, c) + getNum(b, r, c), r, c);
         }
     }
-    return ;
+    return ans;
 }
-void subtractMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans) {
+struct Matrix *subtractMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans) {
     deleteMatrix(ans);
     ans = NULL;
-    if( a -> row != b -> row || a -> col != b -> col ) return ;
+    if(a == NULL || b == NULL) return ans;
+    if( a -> row != b -> row || a -> col != b -> col ) return ans;
     createMatrix(a -> row, a -> col, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
             setNum(ans, getNum(a, r, c) - getNum(b, r, c), r, c);
         }
     }
-    return ;
+    return ans;
 }
-void multiplyMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans) {
+struct Matrix *multiplyMatrix(const struct Matrix *a, const struct Matrix *b, struct Matrix *ans) {
     deleteMatrix(ans);
     ans = NULL;
-    if(a -> col != b -> row) return ;
+    if(a == NULL || b == NULL) return ans;
+    if(a -> col != b -> row) return ans;
     createMatrix(a -> row, b -> col, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
@@ -80,38 +85,42 @@ void multiplyMatrix(const struct Matrix *a, const struct Matrix *b, struct Matri
             setNum(ans, ans_tmp, r, c);
         }
     }
-    return ;
+    return ans;
 }
-void addScaler(const float num, const struct Matrix *used, struct Matrix *ans) {
+struct Matrix *addScaler(const float num, const struct Matrix *used, struct Matrix *ans) {
+    if(used == NULL) return NULL;
     copyMatrix(used, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
             setNum(ans, getNum(ans, r, c) + num, r, c);
         }
     }
-    return ;
+    return ans;
 }
-void subtractScaler(const float num, const struct Matrix *used, struct Matrix *ans) {
+struct Matrix *subtractScaler(const float num, const struct Matrix *used, struct Matrix *ans) {
+    if(used == NULL) return NULL;
     copyMatrix(used, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
             setNum(ans, getNum(ans, r, c) - num, r, c);
         }
     }
-    return ;
+    return ans;
 }
-void multiplyScaler(const float num, const struct Matrix *used, struct Matrix *ans) {
+struct Matrix *multiplyScaler(const float num, const struct Matrix *used, struct Matrix *ans) {
+    if(used == NULL) return NULL;
     copyMatrix(used, ans);
     for(int r=1; r<=ans -> row; r++) {
         for(int c=1; c<=ans -> col; c++) {
             setNum(ans, getNum(ans, r, c) * num, r, c);
         }
     }
-    return ;
+    return ans;
 }
 
 //最大最小
 float max(const struct Matrix *used) {
+    if(used == NULL) return 0.0;
     float ans = getNum(used, 1, 1);
     for(int r=1; r<=used -> row; r++) {
         for(int c=1; c<=used -> col; c++) {
@@ -123,6 +132,7 @@ float max(const struct Matrix *used) {
     return ans;
 }
 float min(const struct Matrix *used) {
+    if(used == NULL) return 0.0;
     float ans = getNum(used, 1, 1);
     for(int r=1; r<=used -> row; r++) {
         for(int c=1; c<=used -> col; c++) {
@@ -136,6 +146,7 @@ float min(const struct Matrix *used) {
 
 //输出
 void print(const struct Matrix *used) {
+    if(used == NULL) return;
     for(int r=1; r<=used -> row; r++) {
         for(int c=1; c<=used -> col; c++) {
             printf("%f ", getNum(used, r, c));
